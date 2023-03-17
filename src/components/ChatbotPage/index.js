@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Form, InputGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import MessageCard from '../MessageCard';
-import { getChat, postChat, createChat } from '../../requests/chatbot-service';
+import { getChat, postChat, createChat, getChatbot } from '../../requests/chatbot-service';
 import Loading from '../Loading';
 import Error from '../Error';
 
@@ -11,6 +11,10 @@ function ChatbotPage() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState('');
+  const [role, setRole] = useState('');
+  const [greeting, setGreeting] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -27,6 +31,10 @@ function ChatbotPage() {
   }, [messages]);
 
   useEffect(() => {
+    handleGetChatbot()
+  }, []);
+
+  useEffect(() => {
     const fetchChat = async () => {
       setIsLoading(true);
       try {
@@ -41,6 +49,8 @@ function ChatbotPage() {
 
     if (chatId !== '') {
       fetchChat();
+    } else {
+      handleStartChat();
     }
   }, [chatId]);
 
@@ -89,22 +99,29 @@ function ChatbotPage() {
     }
   };
 
+  const handleGetChatbot = async () => {
+    setIsLoading(true);
+
+    try {
+      const chatbot = await getChatbot(chatbotId); 
+      setRole(chatbot.role);
+      setGreeting(chatbot.greeting);
+      setTitle(chatbot.title);
+      setDescription(chatbot.description);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div style={{ height: '100vh', fontFamily: 'monospace', fontWeight: '500', backgroundColor: '##fff' }}>
       <header style={{ height: '60px', backgroundColor: '#303030', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 20px', position: 'fixed', top: '0', left: '0', right: '0' }}>
-        <h3>AI Chat</h3>
+        <h3>{title}</h3>
       </header>
       {isLoading && <Loading />}
       {errorMessage && <Error message={errorMessage} />}
-
-      {chatId === '' ? (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        <Button variant="primary" size="lg" onClick={handleStartChat}>
-          Start Chat
-        </Button>
-      </div>
-    ) : (
 
       <Container fluid style={{ paddingTop: '80px', paddingBottom: '100px', backgroundColor: '#fff' }}>
         <Row >
@@ -132,7 +149,6 @@ function ChatbotPage() {
           </Col>
         </Row>
       </Container>
-    )}
     </div>
   );
 }

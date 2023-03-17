@@ -5,7 +5,7 @@ import { createChatbot } from '../../requests/chatbot-service';
 import Loading from '../Loading';
 import Error from '../Error';
 
-function CreateChatbotForm( {setChatbotIds, handleClose} ) {
+function CreateChatbotForm( {setChatbots, handleClose} ) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [greeting, setGreeting] = useState('');
@@ -36,9 +36,9 @@ function CreateChatbotForm( {setChatbotIds, handleClose} ) {
     setErrorMessage(null);
     try {
       const data = await createChatbot(role, greeting, title, description);
-      setChatbotIds((chatbotIds) => [
-        ...chatbotIds,
-        data.chatbot_id
+      setChatbots((chatbots) => [
+        ...chatbots,
+        {"id": data.chatbot_id, "role": role, "greeting": greeting, "title": title, "description": description}
       ]);
       handleClose();
       //navigation(`/chatbots/${data.chatbot_id}`);
@@ -53,14 +53,14 @@ function CreateChatbotForm( {setChatbotIds, handleClose} ) {
       {isLoading && <Loading />}
       {errorMessage && <Error message={errorMessage} />}
       <Form onSubmit={handleSubmit} id='create-chatbot-form'>
-        {/* <Form.Group controlId="title">
+        <Form.Group controlId="title">
           <Form.Label>Title</Form.Label>
           <Form.Control type="text" value={title} onChange={handleTitleChange} />
         </Form.Group>
         <Form.Group controlId="description">
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} value={description} onChange={handleDescriptionChange} />
-        </Form.Group> */}
+        </Form.Group>
         <Form.Group className="mb-3" controlId="role">
           <Form.Label>Role</Form.Label>
           <Form.Control autoFocus type="text" value={role} onChange={handleRoleChange} />

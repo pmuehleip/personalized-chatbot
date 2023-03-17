@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Button, Row, Col } from 'react-bootstrap';
+import { Container, Button, Row, Col, Badge } from 'react-bootstrap';
 import CreateChatbotModal from '../CreateChatbotModal';
 import ChatbotCard from '../ChatbotCard';
 
 function DashboardPage() {
 
-
-  const [chatbotIds, setChatbotIds] = useState([]);
+  const [chatbots, setChatbots] = useState([]);
   const [showModal, setShowModal] = useState(false);
   
   const handleCloseModal = () => setShowModal(false);
@@ -15,20 +14,25 @@ function DashboardPage() {
   return (
     <Container>
       <Row>
-        <h1>Dashboard</h1>
-      </Row>
-      <Row xs={1} md={2} className="g-4">
-      {chatbotIds.map((chatbotId, index) => (
-        <Col>
-          <ChatbotCard chatbotId={chatbotId} />
-        </Col>
-      ))}
+        <h1>Chatbot Dashboard</h1>
       </Row>
       <Row md={4} className="mt-3 mb-3 d-flex justify-content-center">
         <Button onClick={handleShowModal}>Create Chatbot</Button>
       </Row>
+      <Row className="m-3">
+        <Col>
+          <Badge bg="warning" text="dark">Note</Badge> This currently does not persist created chatbots
+        </Col>
+      </Row>
+      <Row xs={1} md={2} className="g-4">
+      {chatbots.map((chatbot, index) => (
+        <Col>
+          <ChatbotCard chatbot={chatbot} />
+        </Col>
+      ))}
+      </Row>
 
-      <CreateChatbotModal setChatbotIds={setChatbotIds} show={showModal} handleClose={handleCloseModal} />
+      <CreateChatbotModal setChatbots={setChatbots} show={showModal} handleClose={handleCloseModal} />
     </Container>
   );
 }

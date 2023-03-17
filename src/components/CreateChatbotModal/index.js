@@ -2,17 +2,16 @@ import React from 'react';
 import { Row, Col, Container, Modal, Button } from 'react-bootstrap';
 import CreateChatbotForm from '../CreateChatbotForm';
 
-function CreateChatbotModal({setChatbotIds, show, handleClose}) {
+function CreateChatbotModal({setChatbots, show, handleClose}) {
 
   return (
     <Modal backdrop="static" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Create Your Chatbot</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container>
-            <h2>Create Your Chatbot</h2>
-            <CreateChatbotForm setChatbotIds={setChatbotIds} handleClose={handleClose} />
+            <CreateChatbotForm setChatbots={setChatbots} handleClose={handleClose} />
           </Container>
         </Modal.Body>
         <Modal.Footer>
