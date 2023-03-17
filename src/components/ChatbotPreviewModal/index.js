@@ -12,8 +12,9 @@ function ChatbotPreviewModal({chatbotId, show, handleClose}) {
     setIsCopied(true);
   };
 
-  const code = `<iframe height="800px" src="http://localhost:3000/chatbots/${chatbotId}" frameborder="0" scrolling="no" width="100%"></iframe>`;
-  const src = `http://localhost:3000/chatbots/${chatbotId}`;
+  const REACT_APP_URL = process.env.REACT_APP_URL;
+  const src = `${REACT_APP_URL}/chatbots/${chatbotId}`;
+  const code = `<iframe height="800px" src="${src}" scrolling="no" width="100%"></iframe>`;
 
   return (
      <Modal show={show} onHide={handleClose} size="xl" >
@@ -24,7 +25,7 @@ function ChatbotPreviewModal({chatbotId, show, handleClose}) {
        <Container>
           <Row>
             <Card>
-              <iframe height="400px" src={src} frameborder="0" scrolling="no" width="100%"></iframe>
+              <iframe height="400px" src={src} scrolling="no" width="100%"></iframe>
             </Card>
 
           </Row>
