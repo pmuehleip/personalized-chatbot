@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 
 function isUser(role) {
-  return role == "user"
+  return role === "user"
 }
 
 function MessageCard(props) {

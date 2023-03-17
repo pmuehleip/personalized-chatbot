@@ -7,8 +7,8 @@ function HomePage() {
     <div>
       <h1>Welcome 👋</h1>
       <h3>Get started by creating a custom chatbot</h3>
-      <Button as={Link} to="/create-chatbot">
-        Create Chatbot
+      <Button as={Link} to="/dashboard">
+        Try FREE now
       </Button>
     </div>
   );
