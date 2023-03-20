@@ -1,0 +1,9 @@
+.clickable-text {
+    color: #303030; /* set the default text color */
+    cursor: pointer; /* show the clickable cursor */
+    text-decoration: none;
+  }
+  
+  .clickable-text:hover {
+    color: #efefef; /* set the text color when hovered over */
+  }

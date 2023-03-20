@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Form, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Navbar } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import MessageCard from '../MessageCard';
 import { getChat, postChat, createChat, getChatbot } from '../../requests/chatbot-service';
 import Loading from '../Loading';
 import Error from '../Error';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMessage } from '@fortawesome/free-regular-svg-icons'
+import './style.css';
+
+
 
 function ChatbotPage() {
   const [message, setMessage] = useState('');
@@ -116,17 +121,23 @@ function ChatbotPage() {
   };
 
   return (
-    <div style={{ height: '100vh', fontFamily: 'monospace', fontWeight: '500', backgroundColor: '##fff' }}>
-      <header style={{ height: '60px', backgroundColor: '#303030', color: '#fff', display: 'flex', alignItems: 'center', padding: '0 20px', position: 'fixed', top: '0', left: '0', right: '0' }}>
-        <h3>{title}</h3>
-      </header>
+    <div>
+      <Navbar bg="dark" variant="dark" fixed="top">
+        <Container fluid>
+          <Navbar.Brand href="#home">
+          <FontAwesomeIcon icon={faMessage} style={{cursor: "pointer"}} />
+            {' '}
+            {title}
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
       {isLoading && <Loading />}
       {errorMessage && <Error message={errorMessage} />}
 
-      <Container fluid style={{ paddingTop: '80px', paddingBottom: '100px', backgroundColor: '#fff' }}>
-        <Row >
-          <Col xs={12}>
-            <div style={{ height: 'calc(100vh - 200px)', overflowY: 'scroll', backgroundColor: '#fff',  padding: '20px' }}>
+      <Container fluid style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+        <Row>
+          <Col xs={12} className="p-3">
+            <div>
               {messages.map((message, index) => (
                 <MessageCard key={index} message={message} />
               ))}
@@ -134,15 +145,16 @@ function ChatbotPage() {
             </div>
           </Col>
         </Row>
-        <Row style={{ position: 'fixed', bottom: '0', left: '0', right: '0', backgroundColor: '#fff', borderTop: '1px solid #ccc', padding: '20px' }}>
-          <Col >
+        <Row className="fixed-bottom p-3" style={{  backgroundColor: '#fff', borderTop: '1px solid #ccc' }}>
+          <Col>
             <Form onSubmit={handleSendMessage}>
                 <Row>
-                    <Col xs={true} md={true}>
-                        <Form.Control size="lg" type="text" placeholder="Write message" value={message} onChange={handleMessageChange} />
+                    <Col xs={true} md={true} lg={true}>
+                        <Form.Control size="lg" type="text" placeholder="Type a message" value={message} onChange={handleMessageChange} />
+
                     </Col>
-                    <Col xs={2} md={1}>
-                        <Button size="lg" type="submit" style={{background: '#303030', color: '#fff', "&:hover": {background: "#efefef"}}}>➤</Button>
+                    <Col xs={2} md={1} lg={1}>
+                        <div variant="link" className="clickable-text" onClick={handleSendMessage}><h3>➤</h3></div>
                     </Col>
                 </Row>
             </Form>

@@ -24,16 +24,17 @@ function ChatbotPreviewModal({chatbot, show, handleClose}) {
      <Modal.Body>
        <Container>
           <Row>
-            <Col>
-            <Card className="shadow">
-              <iframe height="400px" src={src} scrolling="no" width="100%"></iframe>
-            </Card>
-            <div>
-            <b>Chatbot Id:</b> {chatbot.id}
-            </div>
+            <Col lg={true} >
+              <Card border="light" className="shadow">
+                <Card.Text><iframe height="400px" src={src} scrolling="no" width="100%"></iframe></Card.Text>
+              </Card>
+              <div className="my-3"><b>Chatbot Id:</b> {chatbot.id}</div>
+       
+             
+              
             </Col>
-            <Col>
-            <Form>
+            <Col lg={true} >
+              <Form>
                 <Form.Group className="mb-3" controlId="title">
                   <Form.Label className="text-muted">Title</Form.Label>
                   <Form.Control type="text" value={chatbot.title}  />

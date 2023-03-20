@@ -19,6 +19,12 @@ function MessageCard(props) {
     marginLeft: isUser(message.role) ? 'auto' : 'unset',
   };
 
+  if (isUser(message.role)) {
+    messageStyle.borderTopRightRadius = 0;
+  } else {
+    messageStyle.borderTopLeftRadius = 0;
+  }
+
   //const timeString = message.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const timeString = "";
 
