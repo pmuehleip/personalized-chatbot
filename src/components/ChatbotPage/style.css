@@ -1,7 +1,12 @@
 .clickable-text {
-    color: #303030; /* set the default text color */
-    cursor: pointer; /* show the clickable cursor */
+    color: #303030;
     text-decoration: none;
+    background-color: #fff;
+    border: 0;
+    vertical-align: bottom;
+    display: inline-block;
+    height: 100%;
+    font-size: x-large;
   }
   
   .clickable-text:hover {

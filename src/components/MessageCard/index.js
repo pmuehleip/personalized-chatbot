@@ -1,8 +1,12 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import "./style.css"
+
 
 function isUser(role) {
-  return role === "user"
+  return role === "user";
 }
 
 function MessageCard(props) {
@@ -11,9 +15,7 @@ function MessageCard(props) {
   const messageStyle = {
     maxWidth: '75%',
     padding: '10px',
-    //borderRadius: '5px',
     marginBottom: '10px',
-    //textAlign: message.isAI ? 'left' : 'right',
     backgroundColor: isUser(message.role) ?  '#303030' : '#f0f0f0',
     color: isUser(message.role) ? '#fff' : '#000',
     marginLeft: isUser(message.role) ? 'auto' : 'unset',
@@ -32,6 +34,38 @@ function MessageCard(props) {
     <Card border="light" style={messageStyle}>
       <Card.Text style={{ fontSize: '20px', marginBottom: '0', textAlign: 'left' }}>{message.content}</Card.Text>
       <Card.Text style={{ fontSize: '14px', marginTop: '5px', textAlign: 'right' }}>{timeString}</Card.Text>
+    </Card>
+  );
+}
+
+function LoadingEllipsis() {
+  return (
+    <div>
+      <span className="fa-layers">
+        <FontAwesomeIcon icon={faCircle} transform="shrink-9" className="dot dotOne" />
+        <FontAwesomeIcon icon={faCircle} transform="shrink-9 right-10" className="dot dotTwo" />
+        <FontAwesomeIcon icon={faCircle} transform="shrink-9 right-20" className="dot dotThree" />
+      </span>
+     
+    </div>
+  )
+}
+
+export function MessageCardLoading(props) {
+
+  const loadingStyle = {
+    maxWidth: '68px',
+    padding: '10px',
+    marginBottom: '10px',
+    backgroundColor: '#f0f0f0',
+    color: '#000',
+    marginLeft: 'unset',
+    borderTopLeftRadius: '0',
+  };
+  
+  return (
+    <Card border="light" style={loadingStyle}>
+      <div style={{ fontSize: '20px', marginBottom: '0', textAlign: 'left' }}><LoadingEllipsis /></div>
     </Card>
   );
 }

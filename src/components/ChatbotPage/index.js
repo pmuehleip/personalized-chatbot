@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Form, InputGroup, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Navbar, Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import MessageCard from '../MessageCard';
+import MessageCard, {MessageCardLoading} from '../MessageCard';
 import { getChat, postChat, createChat, getChatbot } from '../../requests/chatbot-service';
 import Loading from '../Loading';
 import Error from '../Error';
@@ -122,7 +122,7 @@ function ChatbotPage() {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark" fixed="top">
+      <Navbar bg="dark" variant="dark" sticky="top">
         <Container fluid>
           <Navbar.Brand href="#home">
           <FontAwesomeIcon icon={faMessage} style={{cursor: "pointer"}} />
@@ -131,16 +131,16 @@ function ChatbotPage() {
           </Navbar.Brand>
         </Container>
       </Navbar>
-      {isLoading && <Loading />}
       {errorMessage && <Error message={errorMessage} />}
 
-      <Container fluid style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
+      <Container fluid style={{backgroundColor:"#fff",  paddingBottom: '4rem' }}>
         <Row>
           <Col xs={12} className="p-3">
             <div>
               {messages.map((message, index) => (
                 <MessageCard key={index} message={message} />
               ))}
+              {isLoading && <MessageCardLoading />}
               <div ref={messagesEndRef} />
             </div>
           </Col>
@@ -149,12 +149,12 @@ function ChatbotPage() {
           <Col>
             <Form onSubmit={handleSendMessage}>
                 <Row>
-                    <Col xs={true} md={true} lg={true}>
+                    <Col xs={true} md={true} lg={true} style={{ flexGrow: 1 }}>
                         <Form.Control size="lg" type="text" placeholder="Type a message" value={message} onChange={handleMessageChange} />
 
                     </Col>
-                    <Col xs={2} md={1} lg={1}>
-                        <div variant="link" className="clickable-text" onClick={handleSendMessage}><h3>➤</h3></div>
+                    <Col xs="auto" md="auto" lg="auto">
+                        <Button size="lg" variant="link" bsPrefix="clickable-text" type="submit" onClick={handleSendMessage}>➤</Button>
                     </Col>
                 </Row>
             </Form>

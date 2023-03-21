@@ -1,0 +1,30 @@
+@keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.50;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  .dot {
+    animation: fade 1.5s ease-in-out infinite;
+    animation-direction: alternate;
+    opacity: 0;
+  }
+
+  .dotOne {
+    animation-delay: 0s;
+  }
+
+  .dotTwo {
+    animation-delay: 0.5s;
+  }
+
+  .dotThree {
+    animation-delay: 1.0s;
+  }
+  
