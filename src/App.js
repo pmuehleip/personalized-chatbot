@@ -10,7 +10,7 @@ import HomePage from './components/HomePage';
 
 function App() {
   return (
-    <div className="App" style={{backgroundColor: "#fff", height: "100vh"}}>
+    <div className="App">
       <Router>
           <Routes>
             <Route exact path="/" element={<HomePage/>} />

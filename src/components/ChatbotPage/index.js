@@ -133,7 +133,7 @@ function ChatbotPage() {
       </Navbar>
       {errorMessage && <Error message={errorMessage} />}
 
-      <Container fluid style={{backgroundColor:"#fff",  paddingBottom: '4rem' }}>
+      <Container fluid style={{backgroundColor:"#fff",  paddingBottom: '4rem', paddingTop: '4rem' }}>
         <Row>
           <Col xs={12} className="p-3">
             <div>
