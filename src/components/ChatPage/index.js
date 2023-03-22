@@ -8,35 +8,26 @@ import Loading from '../Loading';
 import Error from '../Error';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-regular-svg-icons'
-import './style.css';
+import ChatDisplay from '../ChatDisplay';
 
 
 
-function ChatbotPage() {
+function ChatPage() {
+  
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [chatId, setChatId] = useState('');
-  const [role, setRole] = useState('');
-  const [greeting, setGreeting] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [chatId, setChatId] = useState('');
+  const [role, setRole] = useState('');
+  const [greeting, setGreeting] = useState('');
 
   const { chatbotId } = useParams();
 
-  const messagesEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }
-
   useEffect(() => {
-    scrollToBottom()
-  }, [messages]);
-
-  useEffect(() => {
-    handleGetChatbot()
+    handleGetChatbot();
   }, []);
 
   useEffect(() => {
@@ -60,10 +51,6 @@ function ChatbotPage() {
   }, [chatId]);
 
 
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
-  };
-
   const handleSendMessage = async (event) => {
     event.preventDefault();
 
@@ -78,12 +65,14 @@ function ChatbotPage() {
         ...messages,
         { "role": "user", "content": message }
       ]);
+
       setMessage('');
       const response = await postChat(chatId, message);
       setMessages((messages) => [
         ...messages,
         response
       ]);
+      
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
@@ -120,50 +109,12 @@ function ChatbotPage() {
     }
   };
 
+
   return (
     <div>
-      <Navbar bg="dark" variant="dark" sticky="top">
-        <Container fluid>
-          <Navbar.Brand href="#home">
-            <FontAwesomeIcon icon={faMessage} style={{ cursor: "pointer" }} />{' '}{title}
-          </Navbar.Brand>
-          <Navbar.Text>
-            {description}
-          </Navbar.Text>
-        </Container>
-      </Navbar>
-      {errorMessage && <Error message={errorMessage} />}
-
-      <Container fluid style={{ backgroundColor: "#fff", paddingBottom: '4rem', paddingTop: '2rem' }}>
-        <Row>
-          <Col xs={12} className="p-3">
-            <div>
-              {messages.map((message, index) => (
-                <MessageCard key={index} message={message} />
-              ))}
-              {isLoading && <MessageCardLoading />}
-              <div ref={messagesEndRef} />
-            </div>
-          </Col>
-        </Row>
-        <Row className="fixed-bottom p-3" style={{ backgroundColor: '#fff', borderTop: '1px solid #ccc' }}>
-          <Col>
-            <Form onSubmit={handleSendMessage}>
-              <Row>
-                <Col xs={true} md={true} lg={true} style={{ flexGrow: 1 }}>
-                  <Form.Control size="lg" type="text" placeholder="Type a message" value={message} onChange={handleMessageChange} />
-
-                </Col>
-                <Col xs="auto" md="auto" lg="auto">
-                  <Button size="lg" variant="link" bsPrefix="clickable-text" type="submit" onClick={handleSendMessage}>➤</Button>
-                </Col>
-              </Row>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+      <ChatDisplay messages={messages} title={title} description={description} message={message} isLoading={isLoading} errorMessage={errorMessage} handleSendMessage={handleSendMessage} setMessage={setMessage}/>
     </div>
   );
 }
 
-export default ChatbotPage;
+export default ChatPage;
