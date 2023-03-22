@@ -28,6 +28,15 @@ export const createChatbot = async (role, greeting, title, description) => {
         handleRequestError(error);
     }
 };
+
+export const updateChatbot = async (chatbotId, role, greeting, title, description) => {
+    try {
+        const response = await api.put(`/chatbot/${chatbotId}`, {"role": role, "greeting": greeting, "title": title, "description": description});
+        return response.data; // {"message": ""}
+    } catch(error) {
+        handleRequestError(error);
+    }
+};
   
 export const getChatbot = async (chatbotId) => {
     try {

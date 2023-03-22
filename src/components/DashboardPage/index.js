@@ -21,7 +21,7 @@ function DashboardPage() {
       </Row>
       <Row className="m-3">
         <Col>
-          <Badge bg="warning" text="dark">Note</Badge> This currently does not persist created chatbots
+          <Badge bg="warning" text="dark">This currently does not persist created chatbots</Badge> 
         </Col>
       </Row>
       <Row xs={1} md={2} className="g-4">

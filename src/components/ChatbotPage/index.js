@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Form, InputGroup, Navbar, Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import MessageCard, {MessageCardLoading} from '../MessageCard';
+import MessageCard, { MessageCardLoading } from '../MessageCard';
 import { getChat, postChat, createChat, getChatbot } from '../../requests/chatbot-service';
 import Loading from '../Loading';
 import Error from '../Error';
@@ -76,7 +76,7 @@ function ChatbotPage() {
     try {
       setMessages((messages) => [
         ...messages,
-        {"role": "user", "content": message}
+        { "role": "user", "content": message }
       ]);
       setMessage('');
       const response = await postChat(chatId, message);
@@ -95,7 +95,7 @@ function ChatbotPage() {
     setIsLoading(true);
 
     try {
-      const chat = await createChat(chatbotId); 
+      const chat = await createChat(chatbotId);
       setChatId(chat.chat_id);
     } catch (error) {
       setErrorMessage(error.message);
@@ -108,7 +108,7 @@ function ChatbotPage() {
     setIsLoading(true);
 
     try {
-      const chatbot = await getChatbot(chatbotId); 
+      const chatbot = await getChatbot(chatbotId);
       setRole(chatbot.role);
       setGreeting(chatbot.greeting);
       setTitle(chatbot.title);
@@ -125,15 +125,16 @@ function ChatbotPage() {
       <Navbar bg="dark" variant="dark" sticky="top">
         <Container fluid>
           <Navbar.Brand href="#home">
-          <FontAwesomeIcon icon={faMessage} style={{cursor: "pointer"}} />
-            {' '}
-            {title}
+            <FontAwesomeIcon icon={faMessage} style={{ cursor: "pointer" }} />{' '}{title}
           </Navbar.Brand>
+          <Navbar.Text>
+            {description}
+          </Navbar.Text>
         </Container>
       </Navbar>
       {errorMessage && <Error message={errorMessage} />}
 
-      <Container fluid style={{backgroundColor:"#fff",  paddingBottom: '4rem', paddingTop: '4rem' }}>
+      <Container fluid style={{ backgroundColor: "#fff", paddingBottom: '4rem', paddingTop: '2rem' }}>
         <Row>
           <Col xs={12} className="p-3">
             <div>
@@ -145,18 +146,18 @@ function ChatbotPage() {
             </div>
           </Col>
         </Row>
-        <Row className="fixed-bottom p-3" style={{  backgroundColor: '#fff', borderTop: '1px solid #ccc' }}>
+        <Row className="fixed-bottom p-3" style={{ backgroundColor: '#fff', borderTop: '1px solid #ccc' }}>
           <Col>
             <Form onSubmit={handleSendMessage}>
-                <Row>
-                    <Col xs={true} md={true} lg={true} style={{ flexGrow: 1 }}>
-                        <Form.Control size="lg" type="text" placeholder="Type a message" value={message} onChange={handleMessageChange} />
+              <Row>
+                <Col xs={true} md={true} lg={true} style={{ flexGrow: 1 }}>
+                  <Form.Control size="lg" type="text" placeholder="Type a message" value={message} onChange={handleMessageChange} />
 
-                    </Col>
-                    <Col xs="auto" md="auto" lg="auto">
-                        <Button size="lg" variant="link" bsPrefix="clickable-text" type="submit" onClick={handleSendMessage}>➤</Button>
-                    </Col>
-                </Row>
+                </Col>
+                <Col xs="auto" md="auto" lg="auto">
+                  <Button size="lg" variant="link" bsPrefix="clickable-text" type="submit" onClick={handleSendMessage}>➤</Button>
+                </Col>
+              </Row>
             </Form>
           </Col>
         </Row>

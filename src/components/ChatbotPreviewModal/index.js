@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Row, Col, Container, Button, Modal, Card, Form } from 'react-bootstrap';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCopy } from '@fortawesome/free-regular-svg-icons'
 
 function ChatbotPreviewModal({chatbot, show, handleClose}) {
 
@@ -14,7 +16,7 @@ function ChatbotPreviewModal({chatbot, show, handleClose}) {
 
   const REACT_APP_URL = process.env.REACT_APP_URL;
   const src = `${REACT_APP_URL}/chatbots/${chatbot.id}`;
-  const code = `<iframe height="800px" src="${src}" scrolling="no" width="100%"></iframe>`;
+  const code = `<iframe height="800px" src="${src}" width="100%"></iframe>`;
 
   return (
      <Modal show={show} onHide={handleClose} size="xl" >
@@ -26,7 +28,7 @@ function ChatbotPreviewModal({chatbot, show, handleClose}) {
           <Row>
             <Col lg={true} >
               <Card border="light" className="shadow">
-                <Card.Text><iframe height="400px" src={src} scrolling="no" width="100%"></iframe></Card.Text>
+                <Card.Text><iframe height="400px" src={src} width="100%"></iframe></Card.Text>
               </Card>
               <div className="my-3"><b>Chatbot Id:</b> {chatbot.id}</div>
        
@@ -90,7 +92,7 @@ function ChatbotPreviewModal({chatbot, show, handleClose}) {
        </Container>
      </Modal.Body>
      <Modal.Footer>
-        <Button onClick={handleCopyClick}>{isCopied ? 'Copied!' : 'Copy Code'}</Button>
+        <Button onClick={handleCopyClick}><FontAwesomeIcon icon={faCopy} /> {isCopied ? 'Copied!' : 'Copy Code'}</Button>
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
