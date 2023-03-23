@@ -111,7 +111,7 @@ function ChatPage() {
 
 
   return (
-    <div style={{height: "100vh"}}>
+    <div style={{height: "100vh", height: "100dvh"}}>
       <ChatDisplay messages={messages} title={title} description={description} message={message} isLoading={isLoading} errorMessage={errorMessage} handleSendMessage={handleSendMessage} setMessage={setMessage}/>
     </div>
   );

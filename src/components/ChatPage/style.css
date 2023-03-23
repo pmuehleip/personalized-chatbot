@@ -1,0 +1,4 @@
+.chat-page {
+    height: 100vh; /* Added as a fallback for dvh if not supported */
+    height: 100dvh; /* Note: this was added for ios to fill the viewport dynamically based on the url bar and other ios ui components.  */
+}
