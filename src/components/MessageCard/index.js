@@ -16,7 +16,7 @@ function MessageCard(props) {
     maxWidth: '75%',
     padding: '10px',
     marginBottom: '10px',
-    backgroundColor: isUser(message.role) ?  '#303030' : '#f0f0f0',
+    backgroundColor: isUser(message.role) ?  '#0d6efd' : '#f8f9fa',
     color: isUser(message.role) ? '#fff' : '#000',
     marginLeft: isUser(message.role) ? 'auto' : 'unset',
   };

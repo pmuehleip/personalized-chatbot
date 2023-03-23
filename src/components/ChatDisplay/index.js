@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { Container, Row, Col, Form, Navbar } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import MessageCard, { MessageCardLoading } from '../MessageCard';
@@ -9,54 +9,63 @@ import './style.css';
 
 
 
-function ChatDisplay({ messages = [], title, description, message, isLoading, errorMessage, handleSendMessage = (message) => { }, setMessage = (message) => {} }) {
+function ChatDisplay({ messages, title, description, message, isLoading, errorMessage, handleSendMessage = (message) => { }, setMessage = (message) => { } }) {
 
     const messagesEndRef = useRef(null);
+    const isMounted = useRef(false);
+    const numMessages = useMemo(() => messages.length, [messages])
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
 
+    // TODO: we should avoid scrolling into view when opening the chatbot editor. This is still occuring.
     useEffect(() => {
-        scrollToBottom()
-    }, [messages]);
+        if (isMounted.current) {
+            scrollToBottom();
+          } else {
+            isMounted.current = true;
+          }
+    }, [numMessages]);
 
     const handleMessageChange = (event) => {
         setMessage(event.target.value);
     };
 
     return (
-        <div style={{height: "400px"}}>
-            <Navbar bg="dark" variant="dark" sticky="top">
+        <div class="parent">
+            <div class="chat-header">
+                <Navbar bg="primary" variant="dark"  >
+                    <Container fluid>
+                        <Navbar.Brand href="#">
+                            <FontAwesomeIcon icon={faMessage} style={{ cursor: "pointer" }} />{' '}<strong>{title}</strong>
+                        </Navbar.Brand>
+                        <Navbar.Text>
+                            {description}
+                        </Navbar.Text>
+                    </Container>
+                </Navbar>
+                {errorMessage && <Error message={errorMessage} />}
+            </div>
+            <div class="chat-scrollable">
                 <Container fluid>
-                    <Navbar.Brand href="#home">
-                        <FontAwesomeIcon icon={faMessage} style={{ cursor: "pointer" }} />{' '}{title}
-                    </Navbar.Brand>
-                    <Navbar.Text>
-                        {description}
-                    </Navbar.Text>
-                </Container>
-            </Navbar>
-            {errorMessage && <Error message={errorMessage} />}
-
-            <Container fluid style={{ backgroundColor: "#fff", paddingBottom: '4rem', paddingTop: '2rem' }}>
-                <Row>
-                    <Col xs={12} className="p-3">
-                        <div>
-                            {messages.map((message, index) => (
-                                <MessageCard key={index} message={message} />
-                            ))}
-                            {isLoading && <MessageCardLoading />}
-                            <div ref={messagesEndRef} />
-                        </div>
-                    </Col>
-                </Row>
-
-            </Container>
-            <div className=" p-3" style={{ backgroundColor: '#fff', borderTop: '1px solid #ccc', position: 'absolute', bottom: '0', width: '100%' }}>
-                <Form onSubmit={handleSendMessage}>
                     <Row>
-                        <Col xs={true} md={true} lg={true} style={{ flexGrow: 1 }}>
+                        <Col xs={12} className="p-3">
+                            <div>
+                                {messages.map((message, index) => (
+                                    <MessageCard key={index} message={message} />
+                                ))}
+                                {isLoading && <MessageCardLoading />}
+                                <div ref={messagesEndRef} />
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+            <div class="chat-footer">
+                <Form className=" p-3" onSubmit={handleSendMessage}>
+                    <Row>
+                        <Col xs={true} md={true} lg={true} >
                             <Form.Control size="lg" type="text" placeholder="Type a message" value={message} onChange={handleMessageChange} />
 
                         </Col>
@@ -70,4 +79,4 @@ function ChatDisplay({ messages = [], title, description, message, isLoading, er
     );
 }
 
-export default ChatDisplay;
+export default React.memo(ChatDisplay);

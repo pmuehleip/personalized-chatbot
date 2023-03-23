@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+
 
 function MyToast({message, showToast, setShowToast}) {
 
   return (
-    <Toast onClose={() => setShowToast(false)} show={showToast} autohide style={{ position: 'fixed', top: '20px', right: '20px' }}>
-        <Toast.Header/>
-        <Toast.Body>
-            <div>
-            <big>{message}</big>
-            </div>
-        </Toast.Body>
-    </Toast>
+    <ToastContainer containerPosition="fixed" className="p-3" position='top-end'>
+        <Toast bg="primary" onClose={() => setShowToast(false)} show={showToast} autohide>
+            {/* <Toast.Header/> */}
+            <Toast.Body className='text-white'>
+                <div>
+                    <big>{message}</big>
+                </div>
+            </Toast.Body>
+        </Toast>
+    </ToastContainer>
   );
 }
 

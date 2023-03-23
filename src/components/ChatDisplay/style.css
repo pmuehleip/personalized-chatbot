@@ -12,3 +12,26 @@
   .clickable-text:hover {
     color: #efefef; /* set the text color when hovered over */
   }
+
+  .parent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .chat-header {
+    width: 100%;
+    /* height: 100px;
+    background-color: red; */
+  }
+  
+  .chat-scrollable {
+    width: 100%;
+    flex: 1;
+    overflow-y: scroll;
+  }
+
+  .chat-footer {
+    width: 100%;
+    margin-top: auto;
+  }

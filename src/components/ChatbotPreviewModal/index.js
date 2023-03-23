@@ -76,8 +76,9 @@ function ChatbotPreviewModal({ chatbot, show, handleClose }) {
           <Row>
             <Col lg={true} >
               <Card border="light" className="shadow">
-                {/* <Card.Text><iframe height="400px" src={src} width="100%"></iframe></Card.Text> */}
-                <Card.Text><ChatDisplay messages={[{ "content": greeting }]} title={title} description={description} message={""} isLoading={false} errorMessage={""} /></Card.Text>
+                  <div style={{height: "400px"}}>
+                    <ChatDisplay messages={[{ "content": greeting }]} title={title} description={description} message={""} isLoading={false} errorMessage={""} />
+                  </div>
               </Card>
               <div className="my-3"><b>Chatbot Id:</b> {chatbot.id}</div>
             </Col>
