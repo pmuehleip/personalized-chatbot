@@ -94,7 +94,7 @@ function ChatbotPreviewModal({ chatbot, show, handleClose }) {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="role">
                   <Form.Label className="text-muted">Role</Form.Label>
-                  <Form.Control autoFocus type="text" value={role} onChange={handleRoleChange} />
+                  <Form.Control type="text" value={role} onChange={handleRoleChange} />
                   <Form.Text className="text-muted">
                     Think of a role as a way of describing the person this chatbot should behave as (e.g. an expert auto mechanic).
                   </Form.Text>
